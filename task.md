@@ -1,39 +1,39 @@
 - [x] Planning & Design
-    - [x] Define Game Mechanics (Economy, Anomalies, Win/Loss)
-    - [x] Design Architecture (React, State Management, "Tambo AI" Mock)
+  - [x] Define Game Mechanics (Economy, Anomalies, Win/Loss)
+  - [x] Design Architecture (React, State Management, "Tambo AI" Mock)
 - [x] Project Setup
-    - [x] Initialize React Project (Tambo Template)
-    - [x] Configure Tambo API Key
-    - [x] Install Dependencies (Recharts, etc.)
+  - [x] Initialize React Project (Tambo Template)
+  - [x] Configure Tambo API Key
+  - [x] Install Dependencies (Recharts, etc.)
 - [/] Core Implementation
-    - [x] Market Engine (Perlin Noise Simulation /w Slope Coloring)
-    - [x] Global Stats Bar (Balance, P&L, Inventory)
-    - [x] UI Skeleton (4 Tabs Layout)
+  - [x] Market Engine (Perlin Noise Simulation /w Slope Coloring)
+  - [x] Global Stats Bar (Balance, P&L, Inventory)
+  - [x] UI Skeleton (4 Tabs Layout)
 - [x] Anomaly System (Tambo AI Integration)
-    - [x] Component Registry (Standard + Glitch Variants)
-    - [x] "Game Master" Agent Logic (Hidden Prompts)
-    - [x] Context/State Integration
-    - [x] Anomaly Registry
-    - [x] Reporting UI (Report Button & Page Scan Logic)
+  - [x] Component Registry (Standard + Glitch Variants)
+  - [x] "Game Master" Agent Logic (Hidden Prompts)
+  - [x] Context/State Integration
+  - [x] Anomaly Registry
+  - [x] Reporting UI (Report Button & Page Scan Logic)
 - [x] Game Loop & Polish
-    - [x] Anomaly Spawning Logic
-    - [x] Remove System Log Sidebar (Background Mode)
-    - [x] Implement Functional Anomalies (Swap Buy/Sell, Ghost)
-    - [x] Implement Difficulty Progression (P&L-based)
-    - [ ] Win/Loss Condition Checks
+  - [x] Anomaly Spawning Logic
+  - [x] Remove System Log Sidebar (Background Mode)
+  - [x] Implement Functional Anomalies (Swap Buy/Sell, Ghost)
+  - [x] Implement Difficulty Progression (P&L-based)
+  - [x] Win/Loss Condition Checks ($25k win, $0 bankrupt, 5 anomalies = game over)
 - [ ] Pre-Game & Manual Testing
-    - [x] Create Start Screen with "Start" Button
-    - [x] Adjust Tick Time to 4 seconds
-    - [x] Disable Auto-Anomaly Injection (Manual Testing Mode)
-    - [ ] Test All Glitch Variants Manually
+  - [x] Create Start Screen with "Start" Button
+  - [x] Adjust Tick Time to 2 seconds (faster gameplay)
+  - [x] Auto-Anomaly Injection ENABLED (Progress-based spawning)
+  - [ ] Test All Glitch Variants Manually
 - [ ] Advanced Anomalies (PLANNING PHASE)
-    - [x] Graph Polish: Add Axis & Grid to StandardChart
-    - [x] Complete All Buy Button Variants (7/7)
-    - [ ] Plan Sell Button Variants (Green, Typo, Reverse)
-    - [ ] Plan GlitchChart Variants (NoAxis, NoGrid, Neon, Flatline)
-    - [ ] Plan Noise Function Refinement (Volatility, Spikes)
-    - [ ] Plan Multi-Slot Anomaly System (Buy/Sell/Chart)
-    - [ ] Plan Random Injector Re-enablement
+  - [x] Graph Polish: Add Axis & Grid to StandardChart
+  - [x] Complete All Buy Button Variants (7/7)
+  - [ ] Plan Sell Button Variants (Green, Typo, Reverse)
+  - [ ] Plan GlitchChart Variants (NoAxis, NoGrid, Neon, Flatline)
+  - [ ] Plan Noise Function Refinement (Volatility, Spikes)
+  - [ ] Plan Multi-Slot Anomaly System (Buy/Sell/Chart)
+  - [ ] Plan Random Injector Re-enablement
 - [x] Visual Polish & verification
-    - [x] Transaction Log Sidebar (Buy/Sell History)
-    - [x] Crypto Color Coding (Tabs, Charts, Transaction Log)
+  - [x] Transaction Log Sidebar (Buy/Sell History)
+  - [x] Crypto Color Coding (Tabs, Charts, Transaction Log)
