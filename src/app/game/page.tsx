@@ -12,6 +12,8 @@ import { components, tools } from "@/lib/tambo";
 import { useGameMaster } from "@/hooks/useGameMaster";
 import { TransactionLog } from "@/components/game/TransactionLog";
 import { getCryptoColor } from "@/lib/cryptoColors";
+import { ThemeToggle } from "@/components/ThemeToggle";
+import { motion } from "framer-motion";
 
 const MAX_ANOMALIES = 4; // 4 cryptos = max 4 anomalies
 const WIN_BALANCE = 25000;
@@ -118,8 +120,27 @@ function GameContent() {
         />
       )}
 
-      <div className="min-h-screen bg-black text-slate-100 p-4 font-sans flex justify-center">
-        <div className="w-full max-w-7xl space-y-6">
+      <div
+        className="min-h-screen text-base font-sans flex justify-center relative transition-colors duration-300"
+        style={{ backgroundColor: "var(--bg-primary)" }}
+      >
+        {/* Background accent */}
+        <div
+          className="absolute top-0 left-1/2 -translate-x-1/2 w-64 sm:w-96 h-64 sm:h-96 rounded-full blur-3xl pointer-events-none opacity-20"
+          style={{ backgroundColor: "var(--accent-primary)" }}
+        />
+
+        {/* Theme Toggle */}
+        <motion.div
+          className="absolute top-3 sm:top-4 right-3 sm:right-4 z-40"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3 }}
+        >
+          <ThemeToggle />
+        </motion.div>
+
+        <div className="w-full max-w-7xl space-y-4 sm:space-y-6 relative z-10 p-3 sm:p-4">
           {/* Header / Global Stats */}
           <GlobalStats
             balance={balance}
@@ -129,17 +150,33 @@ function GameContent() {
           />
 
           {/* Main Content Grid: Game + Transaction Log */}
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-4 sm:gap-6">
             {/* LEFT COLUMN: Main Game */}
-            <div className="space-y-6">
-              <Card className="bg-slate-900 border-slate-800 min-h-[500px]">
-                <CardContent className="p-6">
+            <motion.div
+              className="space-y-4 sm:space-y-6"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4 }}
+            >
+              <Card
+                className="border min-h-[400px] sm:min-h-[500px] transition-colors duration-300"
+                style={{
+                  backgroundColor: "var(--card-bg)",
+                  borderColor: "var(--border-color)",
+                  boxShadow: "var(--shadow-lg)",
+                }}
+              >
+                <CardContent className="p-3 sm:p-6">
                   <Tabs
                     defaultValue="BTC"
                     className="w-full"
                     onValueChange={(value) => setActiveTab(value as Symbol)}
                   >
-                    <TabsList className="grid w-full grid-cols-4 bg-slate-950 mb-8 p-1 gap-1">
+                    <TabsList className="grid w-full grid-cols-4 mb-6 sm:mb-8 p-1 gap-1"
+                      style={{
+                        backgroundColor: "var(--bg-tertiary)",
+                      }}
+                    >
                       {CRYPTO_LIST.map((symbol) => {
                         const color = getCryptoColor(symbol);
                         return (
@@ -147,17 +184,16 @@ function GameContent() {
                             key={symbol}
                             value={symbol}
                             className={`
-                              font-mono font-bold
+                              font-mono font-bold text-xs sm:text-sm
                               data-[state=active]:bg-gradient-to-r data-[state=active]:${color.gradient}
                               data-[state=active]:text-white
-                              data-[state=inactive]:text-slate-500
-                              data-[state=inactive]:hover:${color.text}
+                              data-[state=inactive]:opacity-60
                               transition-all
                             `}
                           >
                             {symbol}{" "}
                             {activeAnomalies[symbol] && (
-                              <span className="ml-2 text-red-500">!</span>
+                              <span className="ml-1 text-red-500">!</span>
                             )}
                           </TabsTrigger>
                         );
@@ -170,7 +206,7 @@ function GameContent() {
                         <TabsContent
                           key={symbol}
                           value={symbol}
-                          className="space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-300"
+                          className="space-y-3 sm:space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-300"
                         >
                           <CryptoCard
                             symbol={symbol}
@@ -189,15 +225,27 @@ function GameContent() {
               </Card>
 
               {/* SCAN & PURGE Button */}
-              <div className="flex justify-center">
-                <button
+              <motion.div
+                className="flex justify-center"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.2 }}
+              >
+                <motion.button
                   onClick={handleReport}
-                  className="px-8 py-3 bg-red-900/50 border border-red-500/50 text-red-200 rounded hover:bg-red-900/80 transition-colors uppercase tracking-widest text-sm font-bold shadow-[0_0_20px_rgba(220,38,38,0.3)] animate-pulse"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg hover:opacity-80 transition-all uppercase tracking-widest text-xs sm:text-sm font-bold shadow-lg animate-pulse"
+                  style={{
+                    backgroundColor: "rgba(239, 68, 68, 0.1)",
+                    color: "var(--accent-danger)",
+                    border: "1px solid rgba(239, 68, 68, 0.3)",
+                  }}
                 >
                   SCAN & PURGE SYSTEMS
-                </button>
-              </div>
-            </div>
+                </motion.button>
+              </motion.div>
+            </motion.div>
 
             {/* RIGHT COLUMN: Transaction Log */}
             <TransactionLog transactions={transactions} />

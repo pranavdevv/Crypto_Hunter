@@ -52,7 +52,7 @@
 }
 
 :root {
-  /* Default Tailwind CSS Variables customized with tambo colors */
+  /* Light Theme - Default */
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
@@ -93,6 +93,27 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  /* Light Theme CSS Variables - Premium Fintech Style */
+  --bg-primary: #F9FAFC;
+  --bg-secondary: #FFFFFF;
+  --bg-tertiary: #F3F5F9;
+  --card-bg: rgba(255, 255, 255, 0.95);
+  --card-bg-hover: rgba(255, 255, 255, 1);
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-tertiary: #64748B;
+  --accent-primary: #15803D;
+  --accent-primary-light: #DCFCE7;
+  --accent-danger: #B91C1C;
+  --accent-danger-light: #FEE2E2;
+  --border-color: rgba(0, 0, 0, 0.06);
+  --border-color-strong: rgba(0, 0, 0, 0.12);
+  --glow-color: rgba(21, 128, 61, 0.1);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.12);
 }
 
 .dark {
@@ -137,6 +158,29 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+
+  /* Dark Theme CSS Variables - Futuristic Cyber Terminal Style */
+  --bg-primary: #0B0F19;
+  --bg-secondary: #111827;
+  --bg-tertiary: #161D2F;
+  --card-bg: rgba(20, 25, 40, 0.88);
+  --card-bg-hover: rgba(24, 30, 48, 0.95);
+  --text-primary: #E5E7EB;
+  --text-secondary: #A0A9B8;
+  --text-tertiary: #7A8397;
+  --accent-primary: #22C55E;
+  --accent-primary-light: rgba(34, 197, 94, 0.2);
+  --accent-danger: #EF4444;
+  --accent-danger-light: rgba(239, 68, 68, 0.2);
+  --border-color: rgba(255, 255, 255, 0.06);
+  --border-color-strong: rgba(255, 255, 255, 0.12);
+  --glow-color: rgba(34, 197, 94, 0.25);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.6);
+
+  color-scheme: dark;
 }
 
 @layer base {
@@ -220,4 +264,52 @@ Animated gradient for thinking text, creates a shimmering effect that moves acro
   100% {
     transform: translate(0, 0);
   }
+}
+
+/* Smooth card hover animations */
+@keyframes card-hover-lift {
+  0% {
+    transform: translateY(0px);
+  }
+
+  100% {
+    transform: translateY(-4px);
+  }
+}
+
+/* Status indicator pulse */
+@keyframes status-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.6;
+  }
+}
+
+/* Smooth number transitions */
+@keyframes number-change {
+  0% {
+    opacity: 0.7;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Glass background effect */
+@keyframes glass-shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.animate-glass-shimmer {
+  animation: glass-shimmer 6s linear infinite;
 }
