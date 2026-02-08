@@ -10,6 +10,7 @@ import {
   TrophyIcon,
 } from "lucide-react";
 import party from "party-js";
+import { motion } from "framer-motion";
 
 interface GameOverProps {
   reason: "anomalies" | "bankrupt" | "win";
@@ -92,74 +93,170 @@ export function GameOver({
   const Icon = msg.icon;
 
   return (
-    <div className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4 backdrop-blur-sm">
+    <motion.div
+      className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4 backdrop-blur-sm"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3 }}
+    >
       <div ref={cardRef}>
-        <Card
-          className={`w-full max-w-lg bg-slate-950 border-slate-800 text-slate-100 ${msg.bgGlow}`}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 0.5, type: "spring", stiffness: 100 }}
+          className="w-full max-w-lg"
         >
-          <CardHeader className="text-center pb-2">
-            <div className="flex justify-center mb-4">
-              <div className={`p-4 rounded-full bg-slate-900 ${msg.color}`}>
-                <Icon className="w-16 h-16 animate-pulse" />
-              </div>
-            </div>
-            <CardTitle
-              className={`text-4xl font-black tracking-widest ${msg.color} font-mono`}
-            >
-              {msg.title}
-            </CardTitle>
-            <p className="text-slate-400 mt-2">{msg.subtitle}</p>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            {/* Stats Grid */}
-            <div className="grid grid-cols-3 gap-4 p-4 bg-slate-900 rounded-lg border border-slate-800">
-              <div className="text-center">
-                <div className="text-xs text-slate-500 uppercase tracking-wider mb-1">
-                  Game Time
-                </div>
-                <div className="text-xl font-mono font-bold text-white">
-                  {gameTime}s
-                </div>
-              </div>
-              <div className="text-center">
-                <div className="text-xs text-slate-500 uppercase tracking-wider mb-1">
-                  Final Balance
-                </div>
-                <div className="text-xl font-mono font-bold text-white">
-                  $
-                  {finalBalance.toLocaleString(undefined, {
-                    maximumFractionDigits: 0,
-                  })}
-                </div>
-              </div>
-              <div className="text-center">
-                <div className="text-xs text-slate-500 uppercase tracking-wider mb-1">
-                  P&L
-                </div>
-                <div
-                  className={`text-xl font-mono font-bold ${pnl >= 0 ? "text-green-500" : "text-red-500"}`}
+          <Card
+            className={`border transition-all duration-300`}
+            style={{
+              backgroundColor: "var(--card-bg)",
+              borderColor: "var(--border-color)",
+              boxShadow: `var(--shadow-xl), ${msg.bgGlow}`,
+            }}
+          >
+            <CardHeader className="text-center pb-4 px-4 sm:px-6 pt-6">
+              <motion.div
+                className="flex justify-center mb-4"
+                animate={{ scale: [1, 1.1, 1] }}
+                transition={{ duration: 1, repeat: Infinity }}
+              >
+                <motion.div
+                  className="p-3 sm:p-4 rounded-full"
+                  style={{
+                    backgroundColor: "rgba(0,0,0,0.2)",
+                  }}
+                  animate={{ rotate: isWin ? [0, 360] : 0 }}
+                  transition={{ duration: isWin ? 2 : 0 }}
                 >
-                  {pnl >= 0 ? "+" : ""}
-                  {pnl.toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                  <Icon
+                    className="w-12 h-12 sm:w-16 sm:h-16"
+                    style={{
+                      color:
+                        msg.color === "text-green-500"
+                          ? "var(--accent-primary)"
+                          : "var(--accent-danger)",
+                    }}
+                  />
+                </motion.div>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.2 }}
+              >
+                <CardTitle
+                  className="text-3xl sm:text-4xl font-black tracking-widest font-mono"
+                  style={{
+                    color:
+                      msg.color === "text-green-500"
+                        ? "var(--accent-primary)"
+                        : "var(--accent-danger)",
+                  }}
+                >
+                  {msg.title}
+                </CardTitle>
+                <p
+                  className="text-sm sm:text-base mt-2"
+                  style={{ color: "var(--text-secondary)" }}
+                >
+                  {msg.subtitle}
+                </p>
+              </motion.div>
+            </CardHeader>
+            <CardContent className="space-y-6 px-4 sm:px-6 pb-6">
+              {/* Stats Grid */}
+              <motion.div
+                className="grid grid-cols-3 gap-3 sm:gap-4 p-3 sm:p-4 rounded-lg border"
+                style={{
+                  backgroundColor: "rgba(0,0,0,0.1)",
+                  borderColor: "var(--border-color)",
+                }}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+              >
+                <div className="text-center">
+                  <div
+                    className="text-xs uppercase tracking-wider mb-1"
+                    style={{ color: "var(--text-secondary)" }}
+                  >
+                    Game Time
+                  </div>
+                  <div
+                    className="text-lg sm:text-xl font-mono font-bold"
+                    style={{ color: "var(--text-primary)" }}
+                  >
+                    {gameTime}s
+                  </div>
                 </div>
-              </div>
-            </div>
+                <div className="text-center">
+                  <div
+                    className="text-xs uppercase tracking-wider mb-1"
+                    style={{ color: "var(--text-secondary)" }}
+                  >
+                    Final Balance
+                  </div>
+                  <motion.div
+                    className="text-lg sm:text-xl font-mono font-bold"
+                    style={{ color: "var(--text-primary)" }}
+                    key={finalBalance}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    $
+                    {finalBalance.toLocaleString(undefined, {
+                      maximumFractionDigits: 0,
+                    })}
+                  </motion.div>
+                </div>
+                <div className="text-center">
+                  <div
+                    className="text-xs uppercase tracking-wider mb-1"
+                    style={{ color: "var(--text-secondary)" }}
+                  >
+                    P&L
+                  </div>
+                  <motion.div
+                    className="text-lg sm:text-xl font-mono font-bold"
+                    style={{
+                      color: pnl >= 0 ? "var(--accent-primary)" : "var(--accent-danger)",
+                    }}
+                    key={pnl}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {pnl >= 0 ? "+" : ""}
+                    {pnl.toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                  </motion.div>
+                </div>
+              </motion.div>
 
-            {/* Restart Button */}
-            <Button
-              onClick={onRestart}
-              className={`w-full py-6 text-lg font-bold uppercase tracking-widest ${
-                isWin
-                  ? "bg-green-600 hover:bg-green-700"
-                  : "bg-red-600 hover:bg-red-700"
-              }`}
-            >
-              <RefreshCwIcon className="w-5 h-5 mr-2" />
-              {isWin ? "PLAY AGAIN" : "TRY AGAIN"}
-            </Button>
-          </CardContent>
-        </Card>
+              {/* Restart Button */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <Button
+                  onClick={onRestart}
+                  className={`w-full py-4 sm:py-6 text-base sm:text-lg font-bold uppercase tracking-widest transition-all ${
+                    isWin
+                      ? "bg-green-600 hover:bg-green-700"
+                      : "bg-red-600 hover:bg-red-700"
+                  }`}
+                >
+                  <RefreshCwIcon className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+                  {isWin ? "PLAY AGAIN" : "TRY AGAIN"}
+                </Button>
+              </motion.div>
+            </CardContent>
+          </Card>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 }

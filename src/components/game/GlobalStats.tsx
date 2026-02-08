@@ -8,6 +8,7 @@ import {
   ShieldAlertIcon,
   ShieldXIcon,
 } from "lucide-react";
+import { motion } from "framer-motion";
 
 interface GlobalStatsProps {
   balance: number;
@@ -76,74 +77,152 @@ export function GlobalStats({
   const StatusIcon = status.icon;
 
   return (
-    <Card className="mb-4 bg-slate-950 border-slate-800 text-slate-100 sticky top-0 z-50 shadow-xl shadow-slate-900/50">
-      <CardContent className="flex items-center justify-between py-4">
-        <div className="flex items-center gap-6">
-          <div className="flex flex-col">
-            <span className="text-xs text-slate-400 uppercase tracking-wider font-bold">
-              Balance
-            </span>
-            <div className="flex items-center text-2xl font-mono font-bold text-white">
-              <WalletIcon className="w-5 h-5 mr-2 text-blue-500" />$
-              {balance.toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })}
-            </div>
-          </div>
-
-          <div className="h-10 w-px bg-slate-800" />
-
-          <div className="flex flex-col">
-            <span className="text-xs text-slate-400 uppercase tracking-wider font-bold">
-              P & L
-            </span>
-            <div
-              className={`flex items-center text-2xl font-mono font-bold ${isProfit ? "text-green-500" : "text-red-500"}`}
+    <motion.div
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+    >
+      <Card
+        className="mb-4 sticky top-0 z-50 border transition-colors duration-300"
+        style={{
+          backgroundColor: "var(--card-bg)",
+          borderColor: "var(--border-color)",
+          boxShadow: "var(--shadow-lg)",
+        }}
+      >
+        <CardContent className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6 py-3 sm:py-4 px-4 sm:px-6 overflow-x-auto">
+          <div className="flex items-center gap-3 sm:gap-8 w-full sm:w-auto">
+            <motion.div
+              className="flex flex-col"
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 300 }}
             >
-              <TrendingUpIcon
-                className={`w-5 h-5 mr-2 ${isProfit ? "" : "rotate-180"}`}
-              />
-              {isProfit ? "+" : ""}
-              {pnl.toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })}
-            </div>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-4">
-          {/* System Status - HIDDEN details for harder gameplay */}
-          <div className="flex flex-col items-end">
-            <div className="flex items-center gap-2">
-              <StatusIcon
-                className={`w-5 h-5 ${status.color} ${activeAnomaliesCount >= 3 ? "animate-pulse" : ""}`}
-              />
               <span
-                className={`text-sm font-bold uppercase tracking-wider ${status.color}`}
+                className="text-xs uppercase tracking-wider font-bold"
+                style={{ color: "var(--text-secondary)" }}
               >
-                SYSTEM: {status.label}
+                Balance
               </span>
+              <motion.div
+                className="flex items-center text-lg sm:text-2xl font-mono font-bold mt-1"
+                style={{ color: "var(--accent-primary)" }}
+              >
+                <WalletIcon className="w-4 h-4 sm:w-5 sm:h-5 mr-2 flex-shrink-0" />
+                <span className="truncate">$</span>
+                <motion.span
+                  key={balance}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.3 }}
+                  className="truncate"
+                >
+                  {balance.toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
+                </motion.span>
+              </motion.div>
+            </motion.div>
+
+            <div
+              className="h-10 w-px opacity-20"
+              style={{ backgroundColor: "var(--border-color)" }}
+            />
+
+            <motion.div
+              className="flex flex-col"
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              <span
+                className="text-xs uppercase tracking-wider font-bold"
+                style={{ color: "var(--text-secondary)" }}
+              >
+                P & L
+              </span>
+              <motion.div
+                className={`flex items-center text-lg sm:text-2xl font-mono font-bold mt-1 ${
+                  isProfit ? "text-green-500" : "text-red-500"
+                }`}
+                key={pnl}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
+              >
+                <TrendingUpIcon
+                  className={`w-4 h-4 sm:w-5 sm:h-5 mr-2 flex-shrink-0 ${
+                    isProfit ? "" : "rotate-180"
+                  }`}
+                />
+                <span className="truncate">
+                  {isProfit ? "+" : ""}
+                  {pnl.toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
+                </span>
+              </motion.div>
+            </motion.div>
+          </div>
+
+          <div
+            className="h-px sm:h-10 w-full sm:w-px opacity-20"
+            style={{ backgroundColor: "var(--border-color)" }}
+          />
+
+          <div className="flex items-center gap-3 sm:gap-6 w-full sm:w-auto justify-between sm:justify-end">
+            <motion.div
+              className="flex flex-col items-start sm:items-end"
+              animate={{ scale: activeAnomaliesCount >= 3 ? [1, 1.02, 1] : 1 }}
+              transition={{ duration: 0.6, repeat: activeAnomaliesCount >= 3 ? Infinity : 0 }}
+            >
+              <div className="flex items-center gap-2">
+                <motion.div
+                  animate={{
+                    opacity: activeAnomaliesCount >= 3 ? [1, 0.6, 1] : 1,
+                  }}
+                  transition={{
+                    duration: 1,
+                    repeat: activeAnomaliesCount >= 3 ? Infinity : 0,
+                  }}
+                >
+                  <StatusIcon className={`w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0`}
+                    style={{ color: status.color === "text-green-500" ? "var(--accent-primary)" : status.color === "text-yellow-500" ? "#EAB308" : status.color === "text-orange-500" ? "#F97316" : "var(--accent-danger)" }}
+                  />
+                </motion.div>
+                <span
+                  className="text-xs sm:text-sm font-bold uppercase tracking-wider"
+                  style={{ color: status.color === "text-green-500" ? "var(--accent-primary)" : status.color === "text-yellow-500" ? "#EAB308" : status.color === "text-orange-500" ? "#F97316" : "var(--accent-danger)" }}
+                >
+                  SYSTEM: {status.label}
+                </span>
+              </div>
+              {activeAnomaliesCount >= 2 && (
+                <motion.span
+                  className="text-xs mt-1"
+                  style={{ color: "var(--accent-danger)" }}
+                  animate={{ opacity: [1, 0.6, 1] }}
+                  transition={{ duration: 0.8, repeat: Infinity }}
+                >
+                  ⚠️{" "}
+                  {activeAnomaliesCount >= 3
+                    ? "SYSTEM CRITICAL!"
+                    : "Anomalies detected!"}
+                </motion.span>
+              )}
+            </motion.div>
+
+            <div
+              className="h-10 w-px opacity-20 hidden sm:block"
+              style={{ backgroundColor: "var(--border-color)" }}
+            />
+
+            <div className="text-xs font-mono whitespace-nowrap" style={{ color: "var(--text-secondary)" }}>
+              TICK: {gameTime}
             </div>
-            {/* Only show warning text when things are bad - no exact numbers! */}
-            {activeAnomaliesCount >= 2 && (
-              <span className="text-xs text-red-400 animate-pulse mt-1">
-                ⚠️{" "}
-                {activeAnomaliesCount >= 3
-                  ? "SYSTEM CRITICAL!"
-                  : "Anomalies detected!"}
-              </span>
-            )}
           </div>
-
-          <div className="h-10 w-px bg-slate-800" />
-
-          <div className="text-xs text-slate-500 font-mono">
-            TICK: {gameTime}
-          </div>
-        </div>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </motion.div>
   );
 }
